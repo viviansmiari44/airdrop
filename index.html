@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>CryptoSafe | Secure Connection</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'><circle cx='50' cy='50' r='50' fill='%23000'/><path d='M50 25 L25 68.3 L75 68.3 Z' fill='%23fff'/></svg>" />
+    <style>
+        :root {
+            --primary: #0C66FF;
+            --bg: #F3F4F6;
+            --card-bg: #FFFFFF;
+            --text-main: #111827;
+            --text-muted: #6B7280;
+            --border: #E5E7EB;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text-main);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            background-color: var(--card-bg);
+            width: 100%;
+            max-width: 400px;
+            border-radius: 24px;
+            padding: 32px 24px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+            text-align: center;
+        }
+
+        .logo-container {
+            width: 64px;
+            height: 64px;
+            background-color: #000;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px auto;
+        }
+
+        .logo-container svg {
+            width: 32px;
+            height: 32px;
+        }
+
+        h1 {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        p.subtitle {
+            font-size: 15px;
+            color: var(--text-muted);
+            margin-bottom: 32px;
+            line-height: 1.5;
+        }
+
+        .wallet-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .wallet-btn {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            padding: 16px;
+            background-color: var(--card-bg);
+            border: 1.5px solid var(--border);
+            border-radius: 16px;
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--text-main);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-decoration: none;
+        }
+
+        .wallet-btn:hover, .wallet-btn:active {
+            border-color: var(--primary);
+            background-color: #F8FAFC;
+        }
+
+        .wallet-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .wallet-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            object-fit: cover;
+        }
+
+        .chevron {
+            color: var(--text-muted);
+            font-weight: bold;
+        }
+
+        .divider {
+            height: 1px;
+            background-color: var(--border);
+            margin: 24px 0;
+            width: 100%;
+        }
+
+        .fallback-btn {
+            background: none;
+            border: none;
+            color: var(--primary);
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            width: 100%;
+            padding: 12px;
+        }
+
+        /* Toast Notification */
+        #toast {
+            visibility: hidden;
+            min-width: 250px;
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            border-radius: 8px;
+            padding: 12px;
+            position: fixed;
+            z-index: 100;
+            bottom: 30px;
+            font-size: 14px;
+            font-weight: 600;
+            opacity: 0;
+            transition: opacity 0.3s, bottom 0.3s;
+        }
+
+        #toast.show {
+            visibility: visible;
+            opacity: 1;
+            bottom: 50px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="logo-container">
+            <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                <path d="M50 25 L25 68.3 L75 68.3 Z" fill="#ffffff" />
+            </svg>
+        </div>
+
+        <h1>Secure Environment</h1>
+        <p class="subtitle">To ensure a secure connection, please open this protocol inside your native wallet app.</p>
+
+        <div class="wallet-list">
+            
+            <a href="https://link.trustwallet.com/open_url?coin_id=60&url=https://cryptosafe.network" class="wallet-btn" onclick="logRoute('Trust Wallet')">
+                <div class="wallet-info">
+                    <img src="https://trustwallet.com/assets/images/media/assets/TWT.png" alt="Trust" class="wallet-icon" style="background:#0b65c6; padding:2px;">
+                    <span>Trust Wallet</span>
+                </div>
+                <span class="chevron">›</span>
+            </a>
+
+            <a href="https://metamask.app.link/dapp/cryptosafe.network" class="wallet-btn" onclick="logRoute('MetaMask')">
+                <div class="wallet-info">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/3/36/MetaMask_Fox.svg" alt="MetaMask" class="wallet-icon">
+                    <span>MetaMask</span>
+                </div>
+                <span class="chevron">›</span>
+            </a>
+
+            <a href="https://go.cb-w.com/dapp?cb_url=https://cryptosafe.network" class="wallet-btn" onclick="logRoute('Coinbase')">
+                <div class="wallet-info">
+                    <img src="https://avatars.githubusercontent.com/u/18060234?s=200&v=4" alt="Coinbase" class="wallet-icon" style="border-radius: 50%;">
+                    <span>Coinbase Wallet</span>
+                </div>
+                <span class="chevron">›</span>
+            </a>
+
+            <a href="safepalwallet://dapp?url=https://cryptosafe.network" class="wallet-btn" onclick="logRoute('SafePal')">
+                <div class="wallet-info">
+                    <img src="https://play-lh.googleusercontent.com/A6-RBS-y3I53PahH2K8kCq7K42Qh1oW9mPzY28Tf6H-K0c4w7K1U5c1_j2T_j2Z8A_w" alt="SafePal" class="wallet-icon">
+                    <span>SafePal</span>
+                </div>
+                <span class="chevron">›</span>
+            </a>
+
+            <a href="tpoutside://openbrowser?url=https://cryptosafe.network" class="wallet-btn" onclick="logRoute('TokenPocket')">
+                <div class="wallet-info">
+                    <img src="https://play-lh.googleusercontent.com/4qE3p4U1J3Y-a6WwJ2L4U_vG-rL_J2s_Y_v_M_w_O_z_F_G_J_R_L_W_H_Q_E_T_H_g" alt="TokenPocket" class="wallet-icon">
+                    <span>TokenPocket</span>
+                </div>
+                <span class="chevron">›</span>
+            </a>
+
+        </div>
+
+        <div class="divider"></div>
+
+        <button class="fallback-btn" onclick="copyToClipboard()">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+            </svg>
+            Copy DApp Link
+        </button>
+    </div>
+
+    <div id="toast">Link copied! Open in your wallet browser.</div>
+
+    <script>
+        const TARGET_URL = "https://cryptosafe.network";
+
+        function logRoute(walletName) {
+            console.log(`[ROUTER] Firing Deep Link for: ${walletName}`);
+            // The browser will attempt to open the URI. If the app isn't installed, 
+            // nothing happens, which is why the fallback copy button is below.
+        }
+
+        function copyToClipboard() {
+            // Failsafe copy mechanism
+            const textArea = document.createElement("textarea");
+            textArea.value = TARGET_URL;
+            document.body.appendChild(textArea);
+            textArea.select();
+            
+            try {
+                document.execCommand('copy');
+                showToast();
+            } catch (err) {
+                console.error('Failed to copy', err);
+            }
+            
+            document.body.removeChild(textArea);
+        }
+
+        function showToast() {
+            const toast = document.getElementById("toast");
+            toast.className = "show";
+            setTimeout(function(){ 
+                toast.className = toast.className.replace("show", ""); 
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
