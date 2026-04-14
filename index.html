@@ -234,31 +234,35 @@
 
     <script>
         // 🛠️ THE DYNAMIC SANITIZATION ENGINE
-        // This ensures every wallet parses the URL perfectly.
-        const TARGET_URL = "https://cryptosafe.network"; // Your main DApp URL
+        const TARGET_URL = "https://cryptosafe.network"; 
         
-        // 1. MetaMask hates "https://" in the deep link. We strip it out.
+        // Formats
         const DAPP_URL_NO_HTTP = TARGET_URL.replace(/^https?:\/\//, '');
-        
-        // 2. Coinbase & SafePal require the URL to be safely percent-encoded.
         const ENCODED_URL = encodeURIComponent(TARGET_URL);
+
+        // 🛠️ FIX 1: TokenPocket requires a stringified JSON object!
+        const tpParams = encodeURIComponent(JSON.stringify({
+            url: TARGET_URL,
+            chain: "ETH",
+            source: "dapp"
+        }));
 
         // Inject the flawlessly formatted URLs into the buttons on load
         document.addEventListener("DOMContentLoaded", () => {
-            // Trust Wallet (coin_id=60 forces Web3 ETH injection)
+            // Trust Wallet (Unchanged - Highly Stable)
             document.getElementById('link-trust').href = `https://link.trustwallet.com/open_url?coin_id=60&url=${ENCODED_URL}`;
             
-            // MetaMask (Stripped HTTP)
+            // MetaMask (Unchanged - Highly Stable)
             document.getElementById('link-metamask').href = `https://metamask.app.link/dapp/${DAPP_URL_NO_HTTP}`;
             
-            // Coinbase (Encoded URL)
-            document.getElementById('link-coinbase').href = `https://go.cb-w.com/dapp?cb_url=${ENCODED_URL}`;
+            // 🛠️ FIX 2: Coinbase (Switched from Universal Link to Raw Native Scheme)
+            document.getElementById('link-coinbase').href = `cbwallet://dapp?url=${ENCODED_URL}`;
             
-            // SafePal (Encoded URL)
-            document.getElementById('link-safepal').href = `safepalwallet://dapp?url=${ENCODED_URL}`;
+            // 🛠️ FIX 3: SafePal (Switched to strict internal DApp scheme)
+            document.getElementById('link-safepal').href = `safepal://dapp?url=${ENCODED_URL}`;
             
-            // TokenPocket (Encoded URL)
-            document.getElementById('link-tokenpocket').href = `tpoutside://openbrowser?url=${ENCODED_URL}`;
+            // 🛠️ FIX 4: TokenPocket (Switched to 'tpdapp' with JSON payload)
+            document.getElementById('link-tokenpocket').href = `tpdapp://open?params=${tpParams}`;
         });
 
         // The Manual Failsafe
