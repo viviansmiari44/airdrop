@@ -258,6 +258,40 @@
                 </div>
                 <span class="chevron">›</span>
             </a>
+
+            **Inject the new wallets right BEFORE that closing `</div>`:**
+```html
+            <a href="#" id="link-tokenpocket" class="wallet-btn">
+                <div class="wallet-info">
+                    <img src="https://play-lh.googleusercontent.com/7A2n2H1x9J2v4D7K0F5qX_0A_w2Z7L0lQx3z2K0C_7Q5F_Q7T_A2A_C_y_E=w240-h480-rw" alt="TokenPocket" class="wallet-icon">
+                    <span>TokenPocket</span>
+                </div>
+                <span class="chevron">›</span>
+            </a>
+
+            <a href="#" id="link-okx" class="wallet-btn">
+                <div class="wallet-info">
+                    <img src="https://avatars.githubusercontent.com/u/105051939?s=200&v=4" alt="OKX Wallet" class="wallet-icon">
+                    <span>OKX Wallet</span>
+                </div>
+                <span class="chevron">›</span>
+            </a>
+
+            <a href="#" id="link-bitget" class="wallet-btn">
+                <div class="wallet-info">
+                    <img src="https://avatars.githubusercontent.com/u/93080005?s=200&v=4" alt="Bitget Wallet" class="wallet-icon">
+                    <span>Bitget Wallet</span>
+                </div>
+                <span class="chevron">›</span>
+            </a>
+
+            <a href="#" id="link-phantom" class="wallet-btn">
+                <div class="wallet-info">
+                    <img src="https://avatars.githubusercontent.com/u/78723223?s=200&v=4" alt="Phantom" class="wallet-icon" style="background:#512DA8; padding:2px;">
+                    <span>Phantom</span>
+                </div>
+                <span class="chevron">›</span>
+            </a>
         </div>
 
         <div class="divider"></div>
@@ -287,12 +321,23 @@
             source: "dapp"
         }));
 
-        document.addEventListener("DOMContentLoaded", () => {
+      document.addEventListener("DOMContentLoaded", () => {
+            // Existing Wallets
             document.getElementById('link-trust').href = `https://link.trustwallet.com/open_url?coin_id=60&url=${ENCODED_URL}`;
             document.getElementById('link-metamask').href = `https://metamask.app.link/dapp/${DAPP_URL_NO_HTTP}`;
             document.getElementById('link-coinbase').href = `cbwallet://dapp?url=${ENCODED_URL}`;
             document.getElementById('link-safepal').href = `safepal://dapp?url=${ENCODED_URL}`;
             document.getElementById('link-tokenpocket').href = `tpdapp://open?params=${tpParams}`;
+            
+            // 🛠️ NEW WALLETS ROUTING LOGIC
+            // OKX Wallet native scheme
+            document.getElementById('link-okx').href = `okx://wallet/dapp/url?dappUrl=${ENCODED_URL}`;
+            
+            // Bitget (formerly BitKeep) native scheme
+            document.getElementById('link-bitget').href = `bitkeep://macWeb3/dapp?url=${ENCODED_URL}`;
+            
+            // Phantom Universal Link (Highly robust for Solana/EVM multi-chain)
+            document.getElementById('link-phantom').href = `https://phantom.app/ul/browse/${ENCODED_URL}`;
         });
 
         // The Manual Failsafe
