@@ -282,6 +282,55 @@
                 </div>
                 <span class="chevron">›</span>
             </a>
+
+            <a href="#" id="link-binance" class="wallet-btn">
+                <div class="wallet-info">
+                    <img src="https://avatars.githubusercontent.com/u/1200635?s=200&v=4" alt="Binance" class="wallet-icon" style="background:#FCD535; padding:2px;">
+                    <span>Binance Web3</span>
+                </div>
+                <span class="chevron">›</span>
+            </a>
+
+            <a href="#" id="link-rabby" class="wallet-btn">
+                <div class="wallet-info">
+                    <img src="https://avatars.githubusercontent.com/u/81816568?s=200&v=4" alt="Rabby Wallet" class="wallet-icon" style="background:#fff; padding:2px;">
+                    <span>Rabby Wallet</span>
+                </div>
+                <span class="chevron">›</span>
+            </a>
+
+            <a href="#" id="link-rainbow" class="wallet-btn">
+                <div class="wallet-info">
+                    <img src="https://avatars.githubusercontent.com/u/45136894?s=200&v=4" alt="Rainbow" class="wallet-icon">
+                    <span>Rainbow</span>
+                </div>
+                <span class="chevron">›</span>
+            </a>
+
+            <a href="#" id="link-exodus" class="wallet-btn">
+                <div class="wallet-info">
+                    <img src="https://avatars.githubusercontent.com/u/15013063?s=200&v=4" alt="Exodus" class="wallet-icon">
+                    <span>Exodus</span>
+                </div>
+                <span class="chevron">›</span>
+            </a>
+
+            <a href="#" id="link-ledger" class="wallet-btn">
+                <div class="wallet-info">
+                    <img src="https://avatars.githubusercontent.com/u/11059888?s=200&v=4" alt="Ledger" class="wallet-icon" style="background:#000; padding:2px;">
+                    <span>Ledger Live</span>
+                </div>
+                <span class="chevron">›</span>
+            </a>
+
+            <a href="#" id="link-trezor" class="wallet-btn">
+                <div class="wallet-info">
+                    <img src="https://avatars.githubusercontent.com/u/5921876?s=200&v=4" alt="Trezor" class="wallet-icon" style="background:#0F1C2E; padding:2px;">
+                    <span>Trezor</span>
+                </div>
+                <span class="chevron">›</span>
+            </a>
+
         </div>
 
         <div class="divider"></div>
@@ -311,23 +360,41 @@
             source: "dapp"
         }));
 
-      document.addEventListener("DOMContentLoaded", () => {
+     document.addEventListener("DOMContentLoaded", () => {
             // Existing Wallets
             document.getElementById('link-trust').href = `https://link.trustwallet.com/open_url?coin_id=60&url=${ENCODED_URL}`;
             document.getElementById('link-metamask').href = `https://metamask.app.link/dapp/${DAPP_URL_NO_HTTP}`;
             document.getElementById('link-coinbase').href = `cbwallet://dapp?url=${ENCODED_URL}`;
             document.getElementById('link-safepal').href = `safepal://dapp?url=${ENCODED_URL}`;
             document.getElementById('link-tokenpocket').href = `tpdapp://open?params=${tpParams}`;
-            
-            // 🛠️ NEW WALLETS ROUTING LOGIC
-            // OKX Wallet native scheme
             document.getElementById('link-okx').href = `okx://wallet/dapp/url?dappUrl=${ENCODED_URL}`;
-            
-            // Bitget (formerly BitKeep) native scheme
             document.getElementById('link-bitget').href = `bitkeep://macWeb3/dapp?url=${ENCODED_URL}`;
-            
-            // Phantom Universal Link (Highly robust for Solana/EVM multi-chain)
             document.getElementById('link-phantom').href = `https://phantom.app/ul/browse/${ENCODED_URL}`;
+
+            // 🛠️ NEW WALLETS ROUTING LOGIC
+            // Binance Web3 Wallet (Uses Binance's internal DeFi DApp router)
+            document.getElementById('link-binance').href = `bnc://app.binance.com/defi/dapp?url=${ENCODED_URL}`;
+
+            // Rabby Mobile 
+            document.getElementById('link-rabby').href = `rabby://dapp?url=${ENCODED_URL}`;
+
+            // Rainbow Wallet (Universal Link)
+            document.getElementById('link-rainbow').href = `https://rnbwapp.com/dapp/${DAPP_URL_NO_HTTP}`;
+
+            // Exodus Mobile
+            document.getElementById('link-exodus').href = `exodus://dapp?url=${ENCODED_URL}`;
+
+            // Ledger Live (Uses Ledger's internal discover router)
+            document.getElementById('link-ledger').href = `ledgerlive://discover/dapp?url=${ENCODED_URL}`;
+
+            // Trezor Fallback
+            // Note: Trezor does not have a native mobile DApp browser like software wallets do. 
+            // We use a fallback trigger to copy the link so they can use it on desktop.
+            document.getElementById('link-trezor').addEventListener('click', (e) => {
+                e.preventDefault();
+                copyToClipboard();
+                alert("Trezor requires desktop connection. Link copied to clipboard!");
+            });
         });
 
         // The Manual Failsafe
